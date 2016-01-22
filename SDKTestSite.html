@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>UVLens SDK Test</title>
+	
+	<!-- Include the SDK -->
+	<script src="UVLensSDK.js"></script>
+	
+	<!-- The script which calls the sdk and shows the response -->
+	<script type='text/javascript'>
+		function getCurrentUV(){
+			var latitude = document.getElementById('latitude').value;
+			var longitude = document.getElementById('longitude').value;
+
+			document.getElementById('response').value = uvlens.getCurrentUV(latitude, longitude);
+		}
+		
+		function getForecast(){
+			var latitude = document.getElementById('latitude').value;
+			var longitude = document.getElementById('longitude').value;
+			
+			document.getElementById('response').value = uvlens.getForecast(latitude, longitude);
+		}
+		
+		function getBurnTime(){
+			var latitude = document.getElementById('latitude').value;
+			var longitude = document.getElementById('longitude').value;
+			var skintype = document.getElementById('skinType').value;
+			
+			document.getElementById('response').value = uvlens.getBurnTime(latitude, longitude, skintype);
+		}
+		
+		function getUVMap(){
+			
+		}
+		
+		function getUVMapForecast(){
+			
+		}
+		
+		function getCoordinates(){
+			var name = document.getElementById('placeName').value;
+			
+			document.getElementById('response').value = uvlens.getCoordinates(name);
+		}
+	</script>
+</head>
+
+<body>
+
+	<h1>UVLens SDK Test Site</h1>
+
+	<textarea Id='placeName'></textarea>
+	<button onclick="getCoordinates()">Get Coordinates</button>
+
+	<br>
+	<br>
+	<br> 
+	
+	Latitude: <textarea Id='latitude'></textarea>
+	Longitude: <textarea Id='longitude'></textarea>
+	Skin Type: <textarea Id='skinType'></textarea>
+
+	<br>
+	<br>
+	<br>
+
+	<button onclick="getCurrentUV()">Get Current UV</button>
+	<button onclick="getForecast()">Get Four Day Forecast</button>
+	<button onclick="getBurnTime()">Get Burn Time</button>
+	<button onclick="getUVMap()">Get UV Map</button>
+	<button onclick="getUVMapForecast()">Get UV Map Four Day Forecast</button>
+
+
+	<br>
+	<br>
+	<br> 
+	
+	Response: <textarea Id='response'></textarea>
+
+</body>
+
+</html>
