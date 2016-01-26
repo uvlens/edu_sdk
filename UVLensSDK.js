@@ -28,6 +28,8 @@ window.uvlens = (function () {
             return xmlhttp.responseText;
     }
     
+    
+    //create uvlens object which contains the functions, the uvlens part of 'uvlens.getCurrentUV()' or similar
     var uvlens = {
         
         //function which can be used to test whether things are working in the sdk
@@ -61,13 +63,9 @@ window.uvlens = (function () {
             }else{
                 console.log('uvlens sdk test passed');
             }
-        },
+        }, 
         
-        getCoordinates: function (locationName) {
-            console.log('getting coordinates');
-
-        },   
-        
+        //this function 
         getCurrentUV: function (latitude, longitude){
             console.log('getting current uv level');
             var response = apiGet('/ForecastUTC', '?longitude=' + latitude + '&latitude=' + longitude + '&key=' + key);
@@ -82,17 +80,18 @@ window.uvlens = (function () {
         
         getBurnTime: function (latitude, longitude, skintype){
             console.log('getting burn time');
-            var response = apiGet('/ForecastUTC', '?longitude=' + longitude + '&latitude=' + latitude + '&startTime=' + new Date() + '&skintype=' + skintype + '&key=' + key);
-            console.log('/ForecastUTC' + '?longitude=' + longitude + '&latitude=' + latitude + '&startTime=' + new Date() + '&skintype=' + skintype + '&key=' + key)
+            var date = new Date().toJSON();
+            var response = apiGet('/BurnTime', '?longitude=' + longitude + '&latitude=' + latitude + '&startTime=' + date + '&skintype=' + skintype + '&key=' + key);
+            console.log(response);
             return JSON.parse(response).BurnTimeMinutes;
         },
         
         getUVMap: function (){
-            console.log('getting todays uv map');
+            console.log('getting current uv map');
         },
         
         getUVMapForecast: function(){
-            console.log('getting four hour forecast uv map');
+            console.log('getting forecast uv map');
         }
     };
      
