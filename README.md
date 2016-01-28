@@ -22,14 +22,17 @@ You will also learn how to show this information in a user friendly way on a web
 
 1. Create a new folder for you to work in.
 2. Navigate into your new folder
-3. Create two new files 'UVLensTutorial.html' and 'UVLensTutorial.js'
-[Screenshot of files in folder](https://octodex.github.com/images/yaktocat.png)
+3. Create a new text document.
+4. Open the newly created text document and navigate to "file" >> "save as" and name it 'UVLensTutorial.html'.
+5. Repeat step 4 but this time name it 'UVLensTutorial.js'
+6. Now there should be 3 files in your newly created foldeer. Feel free to delete the 'New Text Document' or keep it for further notes.
+[Screenshot of files in folder](http://imgur.com/52ICn3f)
 
 ####_Now you need to download the sdk. If you are not viewing this tutorial on Github, [go there now](https://github.com/uvlens/edu_sdk)._
 
 1. On the github page, click on the UVLensSDK.js file
 2. On the new page, right click the 'Raw' button and click 'save link as'
-	[Screenshots of downloading the file](https://octodex.github.com/images/yaktocat.png)
+	[Screenshots of downloading the file](http://imgur.com/1T1YDSo)
 3. Navigate to the folder you created earlier and save as UVLensSDK.js
 
 ###_Now we're ready to get coding!_
@@ -131,8 +134,9 @@ Hint: to make things look nice in your html page add <br> tags which stands for 
 ##Exercise 2:
 ######_Create a user friendly interface to see uv now and forecasted uv_
 
+
 ##Extra for Experts:
-######_Get and show UV Map make a mpa (This is still under construction)_
+######_Get and show UV Map make a map (This is still under construction)_
 
 
 #Technical Documentation
