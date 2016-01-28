@@ -26,13 +26,13 @@ You will also learn how to show this information in a user friendly way on a web
 4. Open the newly created text document and navigate to "file" >> "save as" and name it 'UVLensTutorial.html'.
 5. Repeat step 4 but this time name it 'UVLensTutorial.js'
 6. Now there should be 3 files in your newly created foldeer. Feel free to delete the 'New Text Document' or keep it for further notes.
-![Screenshot of files in folder](http://postimg.org/image/bmngfw6cj/)
+![Screenshot of files in folder](http://s13.postimg.org/b9w29po2v/files_in_folder.png)
 
 ####_Now you need to download the sdk. If you are not viewing this tutorial on Github, [go there now](https://github.com/uvlens/edu_sdk)._
 
 1. On the github page, click on the UVLensSDK.js file
 2. On the new page, right click the 'Raw' button and click 'save link as'
-	![Screenshots of downloading the file](http://postimg.org/image/j8d7s8muv/)
+	![Screenshots of downloading the file](http://s15.postimg.org/4ceoknbgb/desktop.png)
 3. Navigate to the folder you created earlier and save as UVLensSDK.js
 
 ###_Now we're ready to get coding!_
