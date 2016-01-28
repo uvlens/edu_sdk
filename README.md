@@ -59,6 +59,7 @@ You will also learn how to show this information in a user friendly way on a web
 	```html
 	<script type='text/javascript' src='UVLensTutorial.js'></script>
 	```
+	Be sure to add these before the body tag (hint: body tag = <body>) 
 
 ####_Lets test that the SDK is working_
 
@@ -73,13 +74,36 @@ You will also learn how to show this information in a user friendly way on a web
 7. The console should come up with a number which represents the current UV index near your school, now lets start creating a website to read and display this data.
 
 ##Exercise 1:
-######_Create a web page and script which uses the SDK to pull some data and write to the console (find current UV at your school, find forecast)_
+######_In this excercise you will be required to create a button in your webpage that returns the current UV level at your current location_
+
+1. Now is your newly created html file create a function called "getCurrentUV"
+2. In this function you will need 2 variables "latitude" and "longitude"
+3. To specify values, create 2 input tags <input> , one for latitude and the other one for longtude.
+4. Inside the input tag give one and id equal to "latitude" and the other one"longtitude". 
+5. Now time to to create a button. To do so add opening and closing buttons tags and name this button "Get Current UV".
+6. Next, inside your first button tag include
+```html
+...onclick = "getCurrentUV()"
+```
+What this will do is once the button is clicked. It will run your "getCurrentUV" function that you created earlier.
+
+Hint: To check function is working type in the following after your getCurrentUV function: 
+```html
+console.log(getCurrentUV());
+```
+If it is not working, check your developer console to see where you went wrong.
+7. To display the currentUV() on your web page you will need to create an area to show the response you get. Simply create this text area by simplying 
+create a textarea tags with give it an id of response.
+8. Congratulations, you have now created a webpage that tells you the current UV for your location.
+
+Hint: to make things look nice in your html page add <br> tags which stands for break, this will create a space between your html elements and text
+
 
 ##Exercise 2:
 ######_Create a user friendly interface to see uv now and forecasted uv_
 
 ##Extra for Experts:
-######_Get and show UV Map (This is still under construction)_
+######_Get and show UV Map make a mpa (This is still under construction)_
 
 
 #Technical Documentation
