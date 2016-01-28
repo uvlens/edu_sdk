@@ -82,16 +82,22 @@ window.uvlens = (function () {
             console.log('getting burn time');
             var date = new Date().toJSON();
             var response = apiGet('/BurnTime', '?longitude=' + longitude + '&latitude=' + latitude + '&startTime=' + date + '&skintype=' + skintype + '&key=' + key);
-            console.log(response);
             return JSON.parse(response).BurnTimeMinutes;
         },
         
         getUVMap: function (){
             console.log('getting current uv map');
+            var response = apiGet('/PNGs', '?key=' + key);
+            var date = new Date().toJSON();
+            console.log(response);
+            return JSON.parse(response).URL;
         },
         
         getUVMapForecast: function(){
             console.log('getting forecast uv map');
+            var response = apiGet('/PNGs', '?key=' + key);
+            console.log(response);
+            return JSON.parse(response).URL;
         }
     };
      
