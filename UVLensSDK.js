@@ -5,7 +5,7 @@ window.uvlens = (function () {
     var key = 'edusdk';
     
     //this function is used internally by the sdk to send a get request to the server
-    function apiGet(target, parameterString){
+    function apiGet(target, parameterString, onCompletion){
             var xmlhttp;
             
             if(!parameterString){ '?key=' + key };
@@ -43,26 +43,25 @@ window.uvlens = (function () {
             if(!JSON){
                 errorCount++;
                 console.error('ERROR: Your browser does not support JSON encoding/decoding (requires IE8+, chrome 3+, firefox 3.1+, safari 4+ or any other modern browser)');
-            }else{
-                
             }
             
             if(errorCount == 0){
-                var check = apiGet('');
-                if(check){
+                var check = apiGet('/ForecastUTC', '?longitude=1&latitude=1&key=' + key);
+                if(!check){
                     errorCount++;
                     console.error('ERROR: Cannot connect to the uvlens server, check your internet connection')
-                }else if(JSON || JSON.parse(check).StartTime || JSON.parse(check).StartTime < new Date(2000,1,1)){
+                }else if(!JSON || !JSON.parse(check).StartTime){
                     errorCount++;
                     console.error('ERROR: Invalid response from server: \n' + check);
                 }
             }
             
             if(errorCount > 0){
-                alert('ERROR: Testing sdk failed, ' + errorCount + ' errors occured, check console for reasons');
+                alert('ERROR: Issues were found while testing the sdk, ' + errorCount + ' errors occured, check console for details');
             }else{
                 console.log('uvlens sdk test passed');
             }
+
         }, 
         
         //this function 
@@ -83,22 +82,53 @@ window.uvlens = (function () {
             var date = new Date().toJSON();
             var response = apiGet('/BurnTime', '?longitude=' + longitude + '&latitude=' + latitude + '&startTime=' + date + '&skintype=' + skintype + '&key=' + key);
             return JSON.parse(response).BurnTimeMinutes;
-        },
+        }//,
         
-        getUVMap: function (){
+        /*getUVMap: function (){
             console.log('getting current uv map');
-            var response = apiGet('/PNGs', '?key=' + key);
-            var date = new Date().toJSON();
-            console.log(response);
-            return JSON.parse(response).URL;
+            var response = JSON.parse(apiGet('/PNGs', '?key=' + key));
+            
+            var date = new Date(); date.setMinutes(0); date.setMinutes(0);
+            var dateWithoutZone = new Date(date.getFullYear(), date.getMonth(), date.getDate(), date.getHours(), 0 , 0)
+            var jDate = dateWithoutZone.toJSON();
+            jDate = jDate.substr(0, jDate.length - 5);
+            
+            for(var i = 0 ; i < response.length; i++){
+                if(jDate == response[i].ForecastTime){
+                    return response[i].URL;
+                }  
+            }
+            
+            console.log('ERROR: failed to get UV Map for current time, try running uvlens.test()');
+            return null;
         },
         
         getUVMapForecast: function(){
-            console.log('getting forecast uv map');
-            var response = apiGet('/PNGs', '?key=' + key);
-            console.log(response);
-            return JSON.parse(response).URL;
-        }
+            console.log('getting current uv map');
+            var response = JSON.parse(apiGet('/PNGs', '?key=' + key));
+            
+            var date = new Date(); date.setMinutes(0); date.setMinutes(0);
+            var dateWithoutZone = new Date(date.getFullYear(), date.getMonth(), date.getDate(), date.getHours(), 0 , 0)
+            var jDate = dateWithoutZone.toJSON();
+            jDate = jDate.substr(0, jDate.length - 5);
+            
+            var maps = [];
+            
+            var j = 0;
+            for(var i = 0 ; i < response.length; i++){
+                if(jDate.substr(0, 11) == response[i].ForecastTime.substr(0, 11)){
+                    maps[j] = {map: response[i].URL, date: response[i].ForecastTime};
+                    j++;
+                }  
+            }
+            
+            if(maps.length > 0){
+                return maps;
+            }
+            
+            console.log('ERROR: failed to get UV Map for current time, try running uvlens.test()');
+            return null;
+        }*/
     };
      
     return uvlens;
