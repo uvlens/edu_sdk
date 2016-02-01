@@ -67,11 +67,11 @@ window.uvlens = (function () {
         //this function 
         getCurrentUV: function (latitude, longitude){
             console.log('getting current uv level');
-            var response = apiGet('/ForecastUTC', '?longitude=' + latitude + '&latitude=' + longitude + '&key=' + key);
+            var response = apiGet('/ForecastUTC', '?longitude=' + longitude + '&latitude=' + latitude + '&key=' + key);
             return JSON.parse(response).UVNow;
         },
         
-        getForecast: function (latitude, longitude){
+        getForecastUV: function (latitude, longitude){
             console.log('getting four day forecast');
             var response = apiGet('/ForecastUTC', '?longitude=' + longitude + '&latitude=' + latitude + '&key=' + key);
             return JSON.parse(response).LocalForecast.uvi;
