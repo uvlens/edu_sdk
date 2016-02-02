@@ -84,7 +84,6 @@ window.uvlens = (function () {
         }, 
          
         getCurrentUV: function (latitude, longitude){
-            console.log('getting current uv level');
             var response = apiGet('/ForecastUTC', '?longitude=' + longitude + '&latitude=' + latitude + '&key=' + key);
             return JSON.parse(response).UVNow;
         },
@@ -92,8 +91,7 @@ window.uvlens = (function () {
         getForecastUV: function (latitude, longitude){
             
             if(!checkNZ(latitude, longitude, 'uvlens.getForecastUV')){return null}
-            
-            console.log('getting four day forecast');
+
             var response = apiGet('/ForecastUTC', '?longitude=' + longitude + '&latitude=' + latitude + '&key=' + key);
             
             var time = JSON.parse(response).LocalForecast.uvi;
@@ -110,14 +108,11 @@ window.uvlens = (function () {
                 }
             }
             
-            console.log(timeShift);
-            
             
             return time;
         },
         
         getBurnTime: function (latitude, longitude, skintype){
-            console.log('getting burn time');
             var date = new Date().toJSON();
             var response = apiGet('/BurnTime', '?longitude=' + longitude + '&latitude=' + latitude + '&startTime=' + date + '&skintype=' + skintype + '&key=' + key);
             
