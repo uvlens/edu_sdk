@@ -3,6 +3,10 @@ window.uvlens = (function () {
     
     var api = 'https://api.uvlens.com/api/Forecast';
     var key = 'edusdk';
+    var minLongitude = 160;
+    var maxLongitude = 187;
+    var minLatitude = -57;
+    var maxLatitude = -27;
     
     //this function is used internally by the sdk to send a get request to the server
     function apiGet(target, parameterString, onCompletion){
@@ -27,6 +31,21 @@ window.uvlens = (function () {
             
             return xmlhttp.responseText;
     }
+    
+    //internal function for checking if user is within NZ
+    function checkNZ(latitude, longitude, functionName){
+        if(longitude < 0){
+            latitude+=360;
+        }
+        
+        if(latitude > maxLatitude || latitude < minLatitude || longitude > maxLongitude || longitude < minLongitude){
+            console.error('ERROR: The ' + functionName + ' function only supports locations within New Zealand at this time');
+            return false;
+        }else{
+            return true;
+        }
+    }
+                    
     
     
     //create uvlens object which contains the functions, the uvlens part of 'uvlens.getCurrentUV()' or similar
@@ -63,8 +82,7 @@ window.uvlens = (function () {
             }
 
         }, 
-        
-        //this function 
+         
         getCurrentUV: function (latitude, longitude){
             console.log('getting current uv level');
             var response = apiGet('/ForecastUTC', '?longitude=' + longitude + '&latitude=' + latitude + '&key=' + key);
@@ -72,15 +90,39 @@ window.uvlens = (function () {
         },
         
         getForecastUV: function (latitude, longitude){
+            
+            if(!checkNZ(latitude, longitude, 'uvlens.getForecastUV')){return null}
+            
             console.log('getting four day forecast');
             var response = apiGet('/ForecastUTC', '?longitude=' + longitude + '&latitude=' + latitude + '&key=' + key);
-            return JSON.parse(response).LocalForecast.uvi;
+            
+            var time = JSON.parse(response).LocalForecast.uvi;
+            var timeShift = (-1)*(new Date().getTimezoneOffset()/60) - 12;
+            
+            //shift array so that it starts at 0am local time
+            if(timeShift > 0){
+                for(var i = 0; i < timeShift; i++){
+                    time.unshift(0);
+                }
+            }else{
+                for(var i = 0; i > timeShift; i--){
+                    time.shift();
+                }
+            }
+            
+            console.log(timeShift);
+            
+            
+            return time;
         },
         
         getBurnTime: function (latitude, longitude, skintype){
             console.log('getting burn time');
             var date = new Date().toJSON();
             var response = apiGet('/BurnTime', '?longitude=' + longitude + '&latitude=' + latitude + '&startTime=' + date + '&skintype=' + skintype + '&key=' + key);
+            
+            if(!checkNZ(latitude, longitude, 'uvlens.getBurnTime')){return null}
+            
             return JSON.parse(response).BurnTimeMinutes;
         }//,
         

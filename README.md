@@ -29,9 +29,9 @@ You will also learn how to show this information in a user friendly way on a web
 
 ![Screenshot of files in folder](http://s13.postimg.org/b9w29po2v/files_in_folder.png)
 
-####_Now you need to download the sdk. If you are not viewing this tutorial on Github, [go there now](https://github.com/uvlens/edu_sdk)._
+####_Now you need to download the sdk._
 
-1. [Click here to download the SDK] (https://github.com/uvlens/edu_sdk/raw/master/UVLensSDK.js)	
+1. [Click here to download the SDK] (https://github.com/uvlens/edu_sdk/raw/master/UVLensSDK.js)	(or go to https://github.com/uvlens/edu_sdk/raw/master/UVLensSDK.js)
 2. Move the downloaded file to the folder you created earlier
 
 ###_Now we're ready to get coding!_
@@ -68,17 +68,17 @@ You will also learn how to show this information in a user friendly way on a web
 ####_Lets test that the SDK is working_
 
 1. Open **UVLensTutorial.html** in your browser.
-2. Open the developer tools javascript console in your browser (in chrome this is Ctrl + Shift + I then click on the console button at the top of the opened window)
+2. Open the developer tools javascript console in your browser (in chrome this is Ctrl + Shift + I) then click on the console button at the top of the opened window.
 3. In the console type in **uvlens.test()** (this will run a few tests to check whether the SDK is working correctly and give you an error message if something isn't working)
 [Screenshot of developer console]()
-4. If the tests are successful you can try getting the current uv level near you.
+4. If the tests are successful you can **try getting the current uv level near you**.
 5. Go to this website: [Find my Latitude and Longitude](http://www.mapcoordinates.net/en) and using the "show location" bar find your school.
-6. Go back to your **UVLensTutorial.html** page and in the developer console enter **uvlens.getCurrentUV(LATIDUDE, LONGITUDE)** where LATITUDE and LONGITUDE are the
+6. Go back to your **UVLensTutorial.html** page and in the developer console enter **uvlens.getCurrentUV(LATIDUDE,&nbsp;LONGITUDE)** where LATITUDE and LONGITUDE are the
 	values given to you by the website in the previous step (eg. uvlens.getCurrentUV(-36.8523378, 174.7691073)). Then press enter.
 7. The console should come up with a number which represents the current UV index near your school, now lets start creating a website to read and display this data.
 
 ##Exercise 1:
-######_In this excercise you will be required to create a button in your webpage that returns the current UV level at your current location_
+######_In this excercise you will be required to create a simple webpage that will let you click buttons to get raw UV data from our server and display it on the screen._
 
 1. Most of the UV functions need to know your latitude and longitude to work, to specify these values, create 2 input tags `<input>` in your html file, one for latitude and the other one for longtude.
 4. Inside the input tag give one an id equal to "latitude" and the other one "longtitude". 
@@ -89,7 +89,7 @@ You will also learn how to show this information in a user friendly way on a web
 	...onclick = "getCurrentUV()"
 	```
 	
-	so that once the button is clicked. It will run your "getCurrentUV" function that you created earlier.
+	so that once the button is clicked. It will run the "getCurrentUV" function that you will now create.
 	
 7. Now in your created javascript file create a new function called "getCurrentUV"
 8. In this function you will need 2 variables "latitude" and "longitude"
@@ -125,10 +125,8 @@ Now you can repeat almost the same process to get the UV forecast for the next f
 Hint: to make things look nice in your html page add `<br>` tags which stands for break, this will create a space between your html elements and text
 
 
-
-
 ##Exercise 2:
-######_Create a user friendly interface to see current and forecasted uv_
+######_In this exercise you will create a user friendly interface to see current and forecasted UV in a way that makes sense to anyone who looks at it._
 Ok, to get our uv information to make sense the first thing we need to do is convert the numbers we got from the server to a meaningful UV level.
 For now lets split the UV into five categories: UV Index less than 0.5 means no UV, 0.5 to 3.0 is Low, 3.0 to 6.0 is Moderate, 6.0 to 8.0 is High, 8.0 to 11.0 is Very High and if the UV index is above 11 the UV is Extreme.
 
@@ -144,15 +142,106 @@ For now lets split the UV into five categories: UV Index less than 0.5 means no 
 	...
 	...
 	```
-
+	
+	These UV levels indicate how dangerous the UV is. UV starts becoming dangerous around the Moderate level and by the time you get to Extreme UV some people could burn in as little as 10 minutes.
 
 Now lets add this functionality to the our getCurrentUV function, this simply means changin the line where we set the output to the UV `document.getElementById("output").innerHTML = UV`.
 We just need to write getMeaningfulUV(UV) to the output instead of simply UV, this way our output will be set to whatever the getMeaningfulUV function returns when it is given "UV" (the UV index) as an input.
 
 ####_Try it out! your current UV function should now write a meaningful output to the response text box._
+
+Ok now the tricky bit, lets format the UV forecasts into a table so that we can see what is going on there.
+1. Add a `<select>` element with `id="day"` so that we can choose which day we want to see the forecast for.
+2. Add four `<options>` elements to the select like this:
+
+	```html
+	<select id="day">
+		<option value="0"> Today </option>
+		<option value="1"> Tomorrow </option>
+		...
+		...
+	```
+
+3. Underneath the select element add a `<table>` with `id="uvForecast"`, this table will show our forecasted UV.
+4. Inside the table add:
+
+	```html
+	<thead>
+		<tr>
+			<th> Time </th>
+			<th> UV Forecast </th> 
+		</tr>
+	</thead>
+	
+	<tbody>
+	
+	</tbody> 
+	```
+	so that our table has headings and an empty body.
+<br>
+Now we need to create the javascript that will add our forecasts to the table. Lets edit the getForecastUV function.
+1. Firstly remove the line where the response element's innerHTML is set to the UV forecast.
+2. Create a new variable `var table` and set it equal to the "uvForecast" element we created earlier (the table).
+3. Now get the value of the "day" select box using `var dayNumber = parseInt(document.getElementById('day').value)`, the parseInt() function is built into javascript and will convert the 'value' of the select box to a number instead of text.
+4. We also need to get a value for the day that we are looking at the forecast for, to do this we can use 
+
+	```javascript
+	var day = new Date();
+	day.setDate( day.getDate() + dayNumber );
+	```
+	
+	The first line here creates an object containing today's date, while the second line changes this date to today + the value selected in the select box.
+	So, for example, if we selected tomorrow in the selectbox its value = 1, therefore dayNumber = 1. So when this code is run the date is set from today (eg. 19th) to today + 1 (eg. 20th).
+	Javascript will automatically handle the end of a month (eg. January 31st + 1 becomes Febuary 1st) so you dont have to worry about that.
+	
+5. Finally we need to know that start and end time, in hours, for which we want the forecast. These can be set as follows:
+	
+	```javascript
+	var start = 24 * dayNumber;
+	var end = start + 24;
+	```
+	
+	So, here the starting point is shifted along 24 hours for each day that we are looking into the future (ie. For today start = 0, for tomorrow start = 24, for the day after start = 48, etc).
+	The end is simply set to 24 hours after the start so that we are always looking at one day of time.
+
+Now we have all the variables we need to create our table. To actually create the table we are going to use a for loop.
+1. Create a for loop which loops from `i = start` while `i < end`, incrementing `i` by 1 each time.
+2. In the for loop we need to add a row to our table on each iteration. This can be done using the insertRow and insertCell methods.
+
+	```javascript
+	var row = table.insertRow(i - start); 
+	var timeCell = row.insertCell(0);
+	var uvCell = row.insertCell(1);
+	```
+	
+	Ok so line by line this is what is happening:
+	Fist we add a new row to `table`, this row is added at position `i - start` of the table (we need to subtract start because otherwise the first row for the second day would be inserted as row 24, 
+	however since we are only looking at one day at a time we would actually want it to be the first row). 
+	Second we add a new cell to the row we just created. This cell is inserted at position 0 meaning it is the left most cell, we will use it to label the time for that row's UV.
+	Third we add another new cell, this cell is in position 1 meaning it is to the right of the first cell, the UV level will be displayed in this cell.
+	
+3. After those three lines, still inside the for loop, we will now fill the cells with their relevant information.
+
+	```javascript
+	timeCell.innerHTML = day.getDay() + " " + day.getDate() + "/" + day.getMonth() + " at " + (i - dayNumber*24) + ":00";
+	uvCell.innerHTML = getMeaningfulUV(UV[i]);
+	```
+	
+	The first line here looks long and messy, but really all it is doing is putting together information about the day and time for each forecast and putting it into the cell we created for this in the last step.
+	The second line gets the UV forecast for the current time, uses the function we created earlier to make it meaningful and places it into the cell we created.
+	
+	**Note:** UV is the response from the uvlens.getForecastUV function, it is an array which contains hourly forecasts starting from 12 am today. 
+	So by saying UV[i] we are saying we want the forecast i hours ahead of the current time. So for example when i = 30 we are looking at the forecast for 6 am tomorrow.
+	
+4. Try out your website, it should show a table with forecasts for whatever day you choose.
+
+_**Hint:** At the moment you need you need to push the get forecast button every time you choose a different date in the select box. Try adding an onchange= to the select element_
+
+####You are finished! you now have a very simple website for looking at live and forecasted UV data.
+
 	
 ##Extra for Experts (coming soon):
-######_Get and show UV Map make a map (This is still under construction)_
+######_In this excercise you will create a map which allows you to see UV forecasts around the world for the next four days. (This is still under construction)_
 
 
 #Technical Documentation
@@ -166,7 +255,7 @@ newer than IE 8.
 | ------------- | ------------- |
 | test()  | Performs a few tests to check whether the SDK is working properly (eg can connect to server) and writes results to the console  |
 | getCurrentUV(latitude, longitude)  | Returns the current UV Index as measured by the nearest sensor to a given latitude/longitude  |
-| getForecastUV(latitude, longitude) | Returns an array of hourly UV Indices forecasting the UV level for today and the next three days |
+| getForecastUV(latitude, longitude) | Returns an array of hourly UV Indices forecasting the UV level for the next 96 hours (4 days) starting today at 12:00 am (midday) local time |
 | getBurntime(latitude, longitude) | Returns an estimate for how long it will take a person with a given skin type (search Fitzpatrick Skin Type) to burn at a given latitude/longitude |
-| getUVMap() | Returns a colour coded PNG map of UV Levels around the world for the current hour |
-| getUVMapForecast() | Returns an array of colour coded PNG maps for UVLevels for 24 hours starting from 6am on the current day |
+<!-- | getUVMap() | Returns a colour coded PNG map of UV Levels around the world for the current hour |
+| getUVMapForecast() | Returns an array of colour coded PNG maps for UVLevels for 24 hours starting from 6am on the current day | -->
