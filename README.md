@@ -7,23 +7,27 @@ This SDK, or Software Development Kit, is a javascript file which includes a num
 access UV data such as live UV measurements, forecasts and burn time estimates. We hope that by teaching students to make use of this data, and the sensors distributed to various schools,
 we can help teach students about the dangers of UV and how to better protect themselves.
 
+We recommend viewing this tutorial online at https://github.com/uvlens/edu_sdk as this will ensure you get the latest version as well as allowing you to copy-paste pieces of code and click links.
+
 #Exercises:
 These exercises will teach you how to use this SDK to find out how dangerous the UV is at your school now, and over the next few days.
-You will also learn how to show this information in a user friendly way on a web page and find out how quickly you could burn in the sun right now.
-&nbsp;
+You will also learn how to show and interpret this information in a user friendly way on a web page.
+<br>
 ###_Required Knowledge_
 - Basic HTML (Buttons, Text, Images, Scripts)
 - Basic Javascript (Functions, Variables)
 - Javascript Arrays
 - Controlling HTML Elements with Javascript (document.getElementByID())
 
+**Impotant Note:** Your **Latitude** and **Longitude** are numbers which represent your position on the surface of the earth.
+<br>
 ##Getting Started:
 ####_First you need to set up the files you are going to be working on._
 
 1. Create a new folder to put your work in.
 2. Navigate into your new folder
 3. Create a new text document.
-4. Open the newly created text document and navigate to "file" >> "save as" and name it 'UVLensTutorial.html'.
+4. Open the newly created text document, navigate to "file" >> "save as" and save it as 'UVLensTutorial.html'.
 5. Repeat step 4 but this time name it 'UVLensTutorial.js'
 6. Now there should be 3 files in your newly created folder. Feel free to delete the 'New Text Document' or keep it for further notes.
 
@@ -68,26 +72,26 @@ You will also learn how to show this information in a user friendly way on a web
 ####_Lets test that the SDK is working_
 
 1. Open **UVLensTutorial.html** in your browser.
-2. Open the developer tools javascript console in your browser (in chrome this is Ctrl + Shift + I) then click on the console button at the top of the opened window.
-3. In the console type in **uvlens.test()** (this will run a few tests to check whether the SDK is working correctly and give you an error message if something isn't working)
+2. Open the **developer tools** javascript **console** in your browser (in chrome this is Ctrl + Shift + I), then click on the console button at the top of the opened window.
+3. In the console type in **uvlens.test()** and press enter (this will run a few tests to check whether the SDK is working correctly and give you an error message if something isn't working).
 
 ![Screenshot of developer console](http://s2.postimg.org/odnnv4l3d/Developer_Console.png)
 
 4. If the tests are successful you can try getting the current UV level near you.
-5. Go to this website: [Find my Latitude and Longitude](http://www.mapcoordinates.net/en) and using the "show location" bar find your school.
-6. Go back to your **UVLensTutorial.html** page and in the developer console enter 
+5. Go to this website: [Find my Latitude and Longitude](http://www.mapcoordinates.net/en) and use the **"show location"** bar to find your school. (text link: http://www.mapcoordinates.net/en)
+6. Go back to your **UVLensTutorial.html** page and in the developer console enter: 
 
 	```javascript
-	uvlens.getCurrentUV(LATITUDE,&nbsp;LONGITUDE)
+	uvlens.getCurrentUV(LATITUDE, LONGITUDE)
 	``` 
-	where LATITUDE and LONGITUDE are the values given to you by the website in the previous step (eg. uvlens.getCurrentUV(-36.8523378, 174.7691073)). Then press enter.
+	replacing **LATITUDE** and **LONGITUDE** with the values given to you by the website in the previous step (eg. uvlens.getCurrentUV(-36.8523378, 174.7691073)). Then press enter.
 	
-7. The console should come up with a number which represents the current **UV index** near your school, now lets start creating a website to read and display this data.
+7. The console should come up with a number which represents the current **UV index** near your school, now lets start creating a **website** to read and display this data.
 
 ##Exercise 1:
 ######_In this exercise you will be required to create a simple webpage that will let you click buttons to get raw UV data from our server and display it on the screen._
 
-1. Most of the UV functions need to know your latitude and longitude to work, to specify these values, create 2 **input** tags (`<input>`) in your html file, one for latitude and the other one for longitude.
+1. Most of the UV functions need to know your **latitude** and **longitude** to work, to specify these values, create 2 **input** tags (`<input>`) in your html file, one for latitude and the other one for longitude.
 4. Inside the input tag give one an id equal to **"latitude"** and the other one **"longitude"**. 
 5. Now create a **button**. This button will get the current UV so change its text to something like "Get Current UV".
 6. Inside your button tag include:
