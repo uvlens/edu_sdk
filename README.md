@@ -234,6 +234,7 @@ Now we need to create the javascript that will add our **forecasts** to the tabl
 	The end is simply set to 24 hours after the start so that we are always looking at one entire day at a time.
 
 Now we have all the variables we need to create and fill our **table**. To actually create the table we are going to use a **for** loop.
+
 1. Create a **for** loop which loops from `var i = start` while `i < end`, incrementing `i` by **1** each time
 	(so we end up going from i = start (00:00 on the chosen day) to i = end (24:00 on the chosen day) with the loop running once for each hour).
 2. Inside the for loop we need to add a row to our table on each iteration (each iteration, and so each row, will represent 1 hour). This can be done using the **insertRow** and **insertCell** methods.
