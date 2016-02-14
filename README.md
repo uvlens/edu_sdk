@@ -43,6 +43,7 @@ You will also learn how to show and interpret this information in a user friendl
 
 1. Open the **UVLensTutorial.html** file you created earlier using a text editor (preferably one designed for development eg. Notepad++ or Visual Studio Code)
 2. Copy the basic html page structure into your document
+
 	```html
 	<!DOCTYPE html>
 	<html>
@@ -55,6 +56,7 @@ You will also learn how to show and interpret this information in a user friendl
 	
 	</html>
 	```
+	
 3. Now lets add the **script** files you will be using to the document
 	Both of these should be added between the `<head>` and `</head>` tags in your **UVLensTutorial.html**
 	First add the SDK script: 
@@ -199,6 +201,7 @@ OK now the tricky bit, lets format the **UV forecasts** into a **table** so that
 	so that our table has headings and an empty body.
 <br>
 Now we need to create the javascript that will add our **forecasts** to the table. Lets edit the **getForecastUV** function.
+
 1. Firstly **remove** the line where the response element's innerHTML is set to the UV forecast.
 2. Create a new variable `var table` and set it equal to the **"uvForecast"** element we created earlier using `document.getElementById` (the table).
 3. Now get the 'value' of the **"day"** select box using: 
@@ -276,12 +279,6 @@ Try clearing your browsing data, turning on private browsing, or just add these 
 <meta http-equiv=”CACHE-CONTROL” content=”NO-CACHE”>
 ```
 
-
-	
-##Extra for Experts (coming soon):
-######_In this exercise you will create a map which allows you to see UV forecasts around the world for the next four days. (This is still under construction)_
-
-
 #Technical Documentation
 
 This SDK is designed for use by students, it contains functions which allow for easy access
@@ -295,5 +292,3 @@ newer than IE 8.
 | getCurrentUV(latitude, longitude)  | Returns the current UV Index as measured by the nearest sensor to a given latitude/longitude  |
 | getForecastUV(latitude, longitude) | Returns an array of hourly UV Indices forecasting the UV level for the next 96 hours (4 days) starting today at 12:00 am (midday) local time |
 | getBurntime(latitude, longitude) | Returns an estimate for how long it will take a person with a given skin type (search Fitzpatrick Skin Type) to burn at a given latitude/longitude |
-<!-- | getUVMap() | Returns a colour coded PNG map of UV levels around the world for the current hour |
-| getUVMapForecast() | Returns an array of colour coded PNG maps for UV levels for 24 hours starting from 6am on the current day | -->
