@@ -117,10 +117,10 @@ You will also learn how to show and interpret this information in a user friendl
 	If it is not working, check your developer console for errors._
 
 8. To display the current UV on your web page you will need to create an area to show the response you get. To do this simply
-	create a `<div>` element with and set its `id='response'`. Then in your getCurrentUV() function write the UV level you got earlier to this text box:
+	create a `<div>` element with and set its `id='output'`. Then in your getCurrentUV() function write the UV level you got earlier to this text box:
 	
 	```javascript
-	document.getElementByID('response').innerHTML = UV;
+	document.getElementByID('output').innerHTML = UV;
 	```
 	
 9. Congratulations, you have created a webpage that tells you the current UV for your location.
@@ -202,7 +202,7 @@ OK now the tricky bit, lets format the **UV forecasts** into a **table** so that
 <br>
 Now you need to create the javascript that will add the **forecasts** to the table. Lets edit the **getForecastUV** function.
 
-1. Firstly **remove** the line where the response element's innerHTML is set to the UV forecast.
+1. Firstly **remove** the line where the output element's innerHTML is set to the UV forecast.
 2. Create a new variable `var table` and set it equal to the **"uvForecast"** element we created earlier (the table) using `document.getElementById`.
 3. Get the 'value' of the **"day"** select box using: 
 
