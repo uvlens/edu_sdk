@@ -1,10 +1,14 @@
-###### UVLens Presents
-### UVLens Nationwide Competition
+###### UVLens Presents (http://www.uvlens.com/assets/img/logo.svg)
+## UVLens Nationwide Competition
+####2016
+---
 
 ### Overview
 
 Congratulations, you’ve been invited to take part in an exclusive competition to showcase your imagination and helping everyone stay safe in the sun. 
 We provide you with the basic tools to help get you started, then you have the freedom to create _anything_ you want.
+
+---
 
 ### Goals
 1. Produce an innocative way to display your uv forecast
@@ -12,6 +16,8 @@ We provide you with the basic tools to help get you started, then you have the f
 
 ### Specifications
 All you need to do is create a website that uses our SDK is anyway and you will be in to win A MILLION DOLLARS or a UVLens sticker depending on your preference.
+
+---
 
 ### Milestones
 1. Create a basic website
