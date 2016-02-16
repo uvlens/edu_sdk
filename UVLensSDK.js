@@ -67,11 +67,6 @@ window.uvlens = (function () {
     //create uvlens object which contains the functions, the uvlens part of 'uvlens.getCurrentUV()' or similar
     var uvlens = {
         
-        //function which sets the key
-        prepare: function (SDKKey) {
-            key = SDKKey;
-        },
-        
         //function which can be used to test whether things are working in the sdk
         test: function () {
             var errorCount = 0;
@@ -104,11 +99,19 @@ window.uvlens = (function () {
             
             if(errorCount > 0){
                 alert('ERROR: Issues were found while testing the sdk, ' + errorCount + ' errors occured, check console for details');
+                return false;
             }else{
-                console.log('uvlens sdk test passed');
+                return true;
             }
-
         }, 
+        
+       //function which sets the key and then test the sdk
+        prepare: function (SDKKey) {
+            key = SDKKey;
+            if(test()){
+                console.log("UVLens SDK Successfuly started with all tests passed, The SDK is ready to use.")
+            }
+        },
         
         getDailyMessage: function (latitude, longitude) {
             if(!hasKey() || !checkLocation(latitude, longitude)){return null};
@@ -147,7 +150,7 @@ window.uvlens = (function () {
             return time;
         },
         
-        getBurnTime: function (latitude, longitude, skintype){
+        /*getBurnTime: function (latitude, longitude, skintype){
             if(!hasKey() || !checkLocation(latitude, longitude)){return null};
             
             var date = new Date().toJSON();
@@ -156,7 +159,7 @@ window.uvlens = (function () {
             if(!checkNZ(latitude, longitude, 'uvlens.getBurnTime')){return null}
             
             return JSON.parse(response).BurnTimeMinutes;
-        }//,
+        }//,*/
         
         /*getUVMap: function (){
             console.log('getting current uv map');
