@@ -38,14 +38,14 @@ window.uvlens = (function () {
             return xmlhttp.responseText;
     }
     
-    //internal function for checking if user is within NZ
-    function checkLocation(latitude, longitude, functionName){
+    //internal function for checking if user is within an area that works
+    function checkLocation(latitude, longitude){
         if(longitude < 0){
             latitude+=360;
         }
         
         if(latitude > maxLatitude || latitude < minLatitude || longitude > maxLongitude || longitude < minLongitude){
-            console.error('ERROR: The ' + functionName + ' function does not support that latitude/longitude you entered. This error should not occur if you entered a location within New Zealand');
+            console.error('ERROR: The latitude/longitude you entered is not supported. This error should not occur if you entered a location within New Zealand');
             return false;
         }else{
             return true;
@@ -111,21 +111,21 @@ window.uvlens = (function () {
         }, 
         
         getDailyMessage: function (latitude, longitude) {
-            if(!hasKey()){return null};
+            if(!hasKey() || !checkLocation(latitude, longitude)){return null};
             
             var response = apiGet('/Combined', '?longitude=' + longitude + '&latitude=' + latitude + '&skintype=0' + '&key=' + key);
             return JSON.parse(response).DailyMessage;
-        }
+        },
          
         getCurrentUV: function (latitude, longitude) {
-            if(!hasKey()){return null};
+            if(!hasKey() || !checkLocation(latitude, longitude)){return null};
             
             var response = apiGet('/Forecast/ForecastUTC', '?longitude=' + longitude + '&latitude=' + latitude + '&key=' + key);
             return JSON.parse(response).UVNow;
         },
         
         getForecastUV: function (latitude, longitude){
-            if(!hasKey()){return null};
+            if(!hasKey() || !checkLocation(latitude, longitude)){return null};
             
             var response = apiGet('/Forecast/ForecastUTC', '?longitude=' + longitude + '&latitude=' + latitude + '&key=' + key);
             
@@ -148,7 +148,7 @@ window.uvlens = (function () {
         },
         
         getBurnTime: function (latitude, longitude, skintype){
-            if(!hasKey()){return null};
+            if(!hasKey() || !checkLocation(latitude, longitude)){return null};
             
             var date = new Date().toJSON();
             var response = apiGet('/Forecast/BurnTime', '?longitude=' + longitude + '&latitude=' + latitude + '&startTime=' + date + '&skintype=' + skintype + '&key=' + key);
