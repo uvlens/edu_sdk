@@ -32,7 +32,7 @@ Click [here](https://github.com/uvlens/edu_sdk/blob/master/Tutorial.md) to get s
 Or follow this link: https://github.com/uvlens/edu_sdk/blob/master/Tutorial.md
 
 ####2. Have a look at some key resources.
-    We've provided some useful tools to help you on your way, simply refer to the bottom of the page to get access them. 
+   We've provided some useful tools to help you on your way, simply refer to the bottom of the page to get access them. 
 
 ####3. Produce an innovative way to display your uv forecast
 
