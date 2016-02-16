@@ -1,15 +1,15 @@
 window.uvlens = (function () {
     "use strict";
     
-    var api = 'https://api.uvlens.com/api/Forecast';
-    var key = 'edusdk';
+    var api = 'https://api.uvlens.com/api';
+    var key = null;
     var minLongitude = 160;
     var maxLongitude = 187;
     var minLatitude = -57;
     var maxLatitude = -27;
     
     //this function is used internally by the sdk to send a get request to the server
-    function apiGet(target, parameterString, onCompletion){
+    function apiGet(target, parameterString){
             var xmlhttp;
             
             if(!parameterString){ '?key=' + key };
@@ -27,20 +27,36 @@ window.uvlens = (function () {
             }catch(error){          
                 console.error('ERROR: server request failed, try running uvlens.test():\n' + error);
                 return(null);    
-            }  
+            }
+            
+            if(xmlhttp.status == 403){
+                console.error('ERROR: You have not entered a valid key into uvlens.prepare(YOUR SDK KEY) please get a key from your school or learn how to request one at "github.com/uvlens/edu_sdk"')
+            }else if(xmlhtt.status == 404){
+                console.error('ERROR: UVLens api server not found, check your internet connection')
+            }
             
             return xmlhttp.responseText;
     }
     
     //internal function for checking if user is within NZ
-    function checkNZ(latitude, longitude, functionName){
+    function checkLocation(latitude, longitude, functionName){
         if(longitude < 0){
             latitude+=360;
         }
         
         if(latitude > maxLatitude || latitude < minLatitude || longitude > maxLongitude || longitude < minLongitude){
-            console.error('ERROR: The ' + functionName + ' function only supports locations within New Zealand at this time');
+            console.error('ERROR: The ' + functionName + ' function does not support that latitude/longitude you entered. This error should not occur if you entered a location within New Zealand');
             return false;
+        }else{
+            return true;
+        }
+    }
+    
+    //internal function to more simply check whether we have a key
+    function hasKey(){
+        if(key == null){
+            return false;
+            console.error("ERROR: you have not entered a key, please run uvlens.prepare('YOUR SDK KEY') before running any other function")
         }else{
             return true;
         }
@@ -50,6 +66,11 @@ window.uvlens = (function () {
     
     //create uvlens object which contains the functions, the uvlens part of 'uvlens.getCurrentUV()' or similar
     var uvlens = {
+        
+        //function which sets the key
+        prepare: function (SDKKey) {
+            key = SDKKey;
+        },
         
         //function which can be used to test whether things are working in the sdk
         test: function () {
@@ -64,16 +85,22 @@ window.uvlens = (function () {
                 console.error('ERROR: Your browser does not support JSON encoding/decoding (requires IE8+, chrome 3+, firefox 3.1+, safari 4+ or any other modern browser)');
             }
             
+            errorCount += hasKey() ? 0 : 1;
+            
             if(errorCount == 0){
-                var check = apiGet('/ForecastUTC', '?longitude=1&latitude=1&key=' + key);
-                if(!check){
-                    errorCount++;
-                    console.error('ERROR: Cannot connect to the uvlens server, check your internet connection')
+                var check = apiGet('/Forecast/ForecastUTC', '?longitude=1&latitude=1&key=' + key);
+                if(!check){                   
+                    
+                        errorCount++;
+                        console.error('ERROR: Cannot connect to the uvlens server, check your internet connection');
+                    
                 }else if(!JSON || !JSON.parse(check).StartTime){
                     errorCount++;
                     console.error('ERROR: Invalid response from server: \n' + check);
                 }
             }
+            
+
             
             if(errorCount > 0){
                 alert('ERROR: Issues were found while testing the sdk, ' + errorCount + ' errors occured, check console for details');
@@ -82,17 +109,25 @@ window.uvlens = (function () {
             }
 
         }, 
+        
+        getDailyMessage: function (latitude, longitude) {
+            if(!hasKey()){return null};
+            
+            var response = apiGet('/Combined', '?longitude=' + longitude + '&latitude=' + latitude + '&skintype=0' + '&key=' + key);
+            return JSON.parse(response).DailyMessage;
+        }
          
-        getCurrentUV: function (latitude, longitude){
-            var response = apiGet('/ForecastUTC', '?longitude=' + longitude + '&latitude=' + latitude + '&key=' + key);
+        getCurrentUV: function (latitude, longitude) {
+            if(!hasKey()){return null};
+            
+            var response = apiGet('/Forecast/ForecastUTC', '?longitude=' + longitude + '&latitude=' + latitude + '&key=' + key);
             return JSON.parse(response).UVNow;
         },
         
         getForecastUV: function (latitude, longitude){
+            if(!hasKey()){return null};
             
-            if(!checkNZ(latitude, longitude, 'uvlens.getForecastUV')){return null}
-
-            var response = apiGet('/ForecastUTC', '?longitude=' + longitude + '&latitude=' + latitude + '&key=' + key);
+            var response = apiGet('/Forecast/ForecastUTC', '?longitude=' + longitude + '&latitude=' + latitude + '&key=' + key);
             
             var time = JSON.parse(response).LocalForecast.uvi;
             var timeShift = (-1)*(new Date().getTimezoneOffset()/60) - 12;
@@ -113,8 +148,10 @@ window.uvlens = (function () {
         },
         
         getBurnTime: function (latitude, longitude, skintype){
+            if(!hasKey()){return null};
+            
             var date = new Date().toJSON();
-            var response = apiGet('/BurnTime', '?longitude=' + longitude + '&latitude=' + latitude + '&startTime=' + date + '&skintype=' + skintype + '&key=' + key);
+            var response = apiGet('/Forecast/BurnTime', '?longitude=' + longitude + '&latitude=' + latitude + '&startTime=' + date + '&skintype=' + skintype + '&key=' + key);
             
             if(!checkNZ(latitude, longitude, 'uvlens.getBurnTime')){return null}
             
