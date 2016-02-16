@@ -24,12 +24,6 @@ This brief contains details of the project as well as links to material which wi
 The project is designed to be completed in your own time over the course of a semester, either on your own or in a small group.
 
 #Technical Documentation
-
-This SDK is designed for use by students, it contains functions which allow for easy access
-to the UVLens servers to pull a variety of UV related data. To use it simply add it to your html file
-as a script. This SDK has no dependencies other than some functions which are included in all major browsers
-newer than IE 8.
-
 | Function  | Description |
 | ------------- | ------------- |
 | test()  | Performs a few tests to check whether the SDK is working properly (eg can connect to server) and writes results to the console  |
