@@ -23,7 +23,7 @@ To find out more on how to use our sdk click [here] (https://github.com/uvlens/e
 ####1. Create a basic website
 
    By following our tutorial via Github, you will have created your very own website to get live uv data and a 4 day uv forecast  and present them anyone.
-Click [here] to get started (https://github.com/uvlens/edu_sdk/blob/master/Tutorial.md):
+Click [here](https://github.com/uvlens/edu_sdk/blob/master/Tutorial.md) to get started.
 
 ####2. Produce an innovative way to display your uv forecast
 

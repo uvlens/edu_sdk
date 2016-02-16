@@ -9,6 +9,10 @@ we can help teach students about the dangers of UV and how to better protect the
 
 We recommend viewing this tutorial online at https://github.com/uvlens/edu_sdk as this will ensure you get the latest version as well as allowing you to copy-paste pieces of code and click links.
 
+To get started with the tutorial [click](https://github.com/uvlens/edu_sdk/blob/master/Tutorial.md) here or follow this link: https://github.com/uvlens/edu_sdk/blob/master/Tutorial.md
+
+To find out about the competition we're running simply [click](https://github.com/uvlens/edu_sdk/blob/master/Project.md) here or follow this link: https://github.com/uvlens/edu_sdk/blob/master/Project.md
+
 #Technical Documentation
 
 This SDK is designed for use by students, it contains functions which allow for easy access
