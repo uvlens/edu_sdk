@@ -39,4 +39,4 @@ The project is designed to be completed in your own time over the course of a se
 To use this SDK a key is required, a key must be given as input to the prepare function to unlock the SDK and
 this key must be valid for the SDK to successfuly access our server and recieve UV data.
 If you are using this SDK as part of a secondary school your school probably has a key which you can use.
-Otherwise please email _____________________ or use the contact form on our website uvlens.com.
+Otherwise please email support@spark64.com or use the contact form on our website uvlens.com.
