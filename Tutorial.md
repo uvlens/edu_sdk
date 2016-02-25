@@ -28,9 +28,6 @@ You will also learn how to show and interpret this information in a user friendl
 1. [Click here to download the SDK] (https://github.com/uvlens/edu_sdk/raw/master/UVLensSDK.js)	(or go to https://github.com/uvlens/edu_sdk/raw/master/UVLensSDK.js)
 2. Move the downloaded file to the folder you created earlier
 
-<br>
----
-<br>
 ##_Now we're ready to get coding!_
 ####_Time to Set up your document_
 
@@ -65,6 +62,7 @@ You will also learn how to show and interpret this information in a user friendl
 	```
 
 ####_Lets test that the SDK is working_
+---
 
 1. Open **UVLensTutorial.html** in your browser.
 2. Open the **developer tools** javascript **console** in your browser (in chrome this is Ctrl + Shift + I), then click on the console button at the top of the opened window.
@@ -85,9 +83,7 @@ You will also learn how to show and interpret this information in a user friendl
 	
 7. The console should come up with a number which represents the current **UV index** near your school, now lets start creating a **website** to read and display this data.
 <br>
----
----
-<br>
+***
 ##Exercise 1:
 ######_In this exercise you will be required to create a simple webpage that will let you click buttons to display various forms of UV data on a website._
 
