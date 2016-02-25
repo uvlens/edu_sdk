@@ -68,8 +68,7 @@ You will also learn how to show and interpret this information in a user friendl
 2. Open the **developer tools** javascript **console** in your browser (in chrome this is Ctrl + Shift + I), then click on the console button at the top of the opened window.
 3. In the console enter **uvlens.prepare(KEY)** entering your UVLens SDK key into the brackets and press enter. This will set up the SDK to use your key (only until you refresh the page though)
 	and will also run some tests to make sure everything is working correctly. Any errors when starting the SDK will be displayed in the console.
-
-![Screenshot of developer console](http://s2.postimg.org/odnnv4l3d/Developer_Console.png)
+	![Screenshot of developer console](http://s2.postimg.org/odnnv4l3d/Developer_Console.png)
 
 4. If the SDK starts successfully you can get try getting the current UV near you.
 5. Go to this website: [Find my Latitude and Longitude](http://www.mapcoordinates.net/en) and use the **"show location"** bar to find your school. (text link: http://www.mapcoordinates.net/en)
@@ -117,11 +116,21 @@ You will also learn how to show and interpret this information in a user friendl
 	latitude = document.getElementByID('latitude').value;
 	```
 	
-10. Now its time to use these values to run the **UVLens SDK**, we are going to start by using `var UV = uvlens.getCurrentUV(latitude, longitude)` which will get the **current UV** near you from the UVLens server.
+10. Now its time to use these values to run the **UVLens SDK**, we are going to start by using:
+
+	```javascript
+	var UV = uvlens.getCurrentUV(latitude, longitude)
+	```
+	
+	this will get the **current UV** near you from the UVLens server.
+	
 	_**Hint**: To check everything is working add `console.log(UV);` to your getCurrentUV function, then click the Get Current UV button, the UV level should be written to the console. 
 	If it is not working, check your developer console for errors._
 
-8. To display the current UV on your web page you will need to create an area to show the response you get. To do this simply create a `<div>` element with and set its `id='output'`.
+8. To display the current UV on your web page you will need to create an area to show the response you get. To do this simply create a div with its id set to output:
+	```html
+	<div id='output'>
+	```
 	 
 9. Then in your getCurrentUV() function write the UV level you got earlier to this text box:
 	
@@ -131,6 +140,8 @@ You will also learn how to show and interpret this information in a user friendl
 	
 10. Congratulations, you have created a webpage that tells you the current UV for your location.
 
+<Br>
+
 ---
 <br>
 
@@ -139,6 +150,8 @@ You can repeat almost the same process to get the **UV forecast** for the next f
 1. Create another **button**, set its text to something like "Get UV Four Day Forecast" and set its `onclick=getForecastUV()`.
 2. In your javascript file add another function called "getForecastUV".
 3. This function should do pretty much the same thing as the getCurrentUV function only use `UV = uvlens.getForecastUV(latitude, longitude)` instead of `uvlens.getCurrentUV(latitude, longitude)`
+
+<br>
 
 ---
 <br>
@@ -152,8 +165,9 @@ Lastly you will use the SDK to get a **pre-generated message** from our server w
 5. Use `var Message = uvlens.getDailyMessage(latitude, longitude)` to get the message from the SDK.
 6. Use the same process as you used for the UV and forecast to write the message to the div you created. (Remember this div has a different id so you will have to change your document.getElementByID)
 
----
+<br>
 
+---
 <br>
 
 ####Well Done, you have finished a basic website that will tell you the current UV and the UV forecast, remember to put on sunscreen if the UV is higher than 3!
@@ -198,10 +212,10 @@ Next lets add this functionality to the the **getCurrentUV** function, this simp
 You just need to write `getMeaningfulUV(UV)` after the equals sign instead of simply `UV`, this way your output will be set to whatever the **getMeaningfulUV** function returns when it is given "UV" (the UV index) as an input.
 
 ####_Try it out! your current UV function should write a meaningful output as its response._
-<br>
 ---
-<br>
+<br><br><br>
 OK now the tricky bit, lets format the **UV forecasts** into a **table** so that you can see what is going on there.
+
 1. Add a `<select>` element with `id="day"` so that you can choose which day you want to see the forecast for.
 2. Add four `<options>` elements for today and the next three days to the select like this, these should have values from **0 to 3**:
 
@@ -262,6 +276,10 @@ Now you need to create the javascript that will add the **forecasts** to the tab
 	
 	So, here the starting point is shifted along 24 hours for each day that you are looking into the future (ie. For today start = 0 (00:00 today), for tomorrow start = 24 (24:00 today = 00:00 tomorrow), etc).
 	The end is simply set to 24 hours after the start so that the program is always looking at one entire day at a time.
+<br>
+	
+---
+<br>
 
 Now you have all the variables you need to create and fill the **table**. To actually create the table lets use a **for** loop.
 
@@ -305,6 +323,8 @@ _**Hint:** At the moment you need you need to push the get forecast button every
 
 The daily message doesn't need any change to be interpretted. Our server has already put the raw data into a friendly message for you! If you want you could try adding your name to the message or doing something similar
 to make it a bit more personalised.
+
+<br>
 
 ####You are finished! you have a simple website for looking at live and forecasted UV data. Try making it look better by adding some CSS!
 ![Screenshot of what it should look like]()
