@@ -1,10 +1,11 @@
-# UVLens Nationwide Competition ![alt text](http://www.uvlens.com/assets/img/logo.svg)
+The Project is not availiable yet, please check back at a later date.
+<!--# UVLens Nationwide Competition ![alt text](http://www.uvlens.com/assets/img/logo.svg)
 ###Presented by Spark64 - 2016
 ---
 
 ## Overview
 
-Congratulations, you’ve been invited to take part in an exclusive competition to showcase your imagination and helping everyone stay safe in the sun. 
+Congratulations, youï¿½ve been invited to take part in an exclusive competition to showcase your imagination and helping everyone stay safe in the sun. 
 
 
 We provide you with the basic tools to help get you started, then you have the freedom to create your very own website. The only twist is, __you must use the provided SDK__.
@@ -54,4 +55,4 @@ Feel free to use any of the resouces below to help you along the way.
 #### All done!
 
 ####From the team at Spark64 - Stay safe in the sun!!
-
+-->

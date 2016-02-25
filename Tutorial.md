@@ -10,6 +10,7 @@ You will also learn how to show and interpret this information in a user friendl
 
 **Impotant Note:** Your **Latitude** and **Longitude** are numbers which represent your position on the surface of the earth.
 <br>
+---
 ##Getting Started:
 ####_First you need to set up the files you are going to be working on._
 
@@ -27,6 +28,9 @@ You will also learn how to show and interpret this information in a user friendl
 1. [Click here to download the SDK] (https://github.com/uvlens/edu_sdk/raw/master/UVLensSDK.js)	(or go to https://github.com/uvlens/edu_sdk/raw/master/UVLensSDK.js)
 2. Move the downloaded file to the folder you created earlier
 
+<br>
+---
+<br>
 ##_Now we're ready to get coding!_
 ####_Time to Set up your document_
 
@@ -46,7 +50,7 @@ You will also learn how to show and interpret this information in a user friendl
 	</html>
 	```
 	
-3. Lets add the **script** files you will be using to the document
+3. Add the **script** files you will be using to the document
 	Both of these should be added between the `<head>` and `</head>` tags in your **UVLensTutorial.html**
 	First add the SDK script: 
 	
@@ -80,7 +84,10 @@ You will also learn how to show and interpret this information in a user friendl
 	Replace **LATITUDE** and **LONGITUDE** with the values given to you by the website in the previous step (eg. uvlens.getCurrentUV(-36.8523378, 174.7691073)). Then press enter.
 	
 7. The console should come up with a number which represents the current **UV index** near your school, now lets start creating a **website** to read and display this data.
-
+<br>
+---
+---
+<br>
 ##Exercise 1:
 ######_In this exercise you will be required to create a simple webpage that will let you click buttons to display various forms of UV data on a website._
 
@@ -126,12 +133,17 @@ You will also learn how to show and interpret this information in a user friendl
 	```
 	
 10. Congratulations, you have created a webpage that tells you the current UV for your location.
-
+<br>
+---
+<br>
 You can repeat almost the same process to get the **UV forecast** for the next four days.
 1. Create another **button**, set its text to something like "Get UV Four Day Forecast" and set its `onclick=getForecastUV()`.
 2. In your javascript file add another function called "getForecastUV".
 3. This function should do pretty much the same thing as the getCurrentUV function only use `UV = uvlens.getForecastUV(latitude, longitude)` instead of `uvlens.getCurrentUV(latitude, longitude)`
-
+<br>
+---
+---
+<br>
 Lastly you will use the SDK to get a **pre-generated message** from our server which gives an **overview** of the day's UV conditions such as the maximum UV level and the times of the day when the UV is dangerous.
 1. Create one more **button** and set its text to something relevant
 2. In your javascript file add a **"getDailyMessage"** function.
@@ -139,14 +151,16 @@ Lastly you will use the SDK to get a **pre-generated message** from our server w
 4. Create a second `<div>` element on your html page with its `id=message`.
 5. Use `var Message = uvlens.getDailyMessage(latitude, longitude)` to get the message from the SDK.
 6. Use the same process as you used for the UV and forecast to write the message to the div you created. (Remember this div has a different id so you will have to change your document.getElementByID)
-
+<br><br>
 ####Well Done, you have finished a basic website that will tell you the current UV and the UV forecast, remember to put on sunscreen if the UV is higher than 3!
 ####However, at the moment the UV is just a number, which doesn't tell us much. And the forecast is a big mess of array information. Move on to exercise 2 to learn how to make your web page user friendly.
 
 
 _**Hint**: to make things look nice in your html page add `<br>` tags which stands for break, this will create a space between your html elements and text._
 
-
+<br>
+---
+<br>
 ##Exercise 2:
 ######_In this exercise you will create a user friendly interface to see current and forecasted UV in a way that makes sense to anyone who looks at it._
 OK, to get your UV information to make sense the first thing we need to do is convert the numbers we got from the server to a meaningful UV level.
@@ -180,7 +194,9 @@ Next lets add this functionality to the the **getCurrentUV** function, this simp
 You just need to write `getMeaningfulUV(UV)` after the equals sign instead of simply `UV`, this way your output will be set to whatever the **getMeaningfulUV** function returns when it is given "UV" (the UV index) as an input.
 
 ####_Try it out! your current UV function should write a meaningful output as its response._
-
+<br>
+---
+<br>
 OK now the tricky bit, lets format the **UV forecasts** into a **table** so that you can see what is going on there.
 1. Add a `<select>` element with `id="day"` so that you can choose which day you want to see the forecast for.
 2. Add four `<options>` elements for today and the next three days to the select like this, these should have values from **0 to 3**:
@@ -209,7 +225,7 @@ OK now the tricky bit, lets format the **UV forecasts** into a **table** so that
 	</tbody> 
 	```
 	so that the table has headings and an empty body.
-<br>
+
 Now you need to create the javascript that will add the **forecasts** to the table. Lets edit the **getForecastUV** function.
 
 1. Firstly **remove** the line where the output element's innerHTML is set to the UV forecast.
