@@ -9,8 +9,8 @@ You will also learn how to show and interpret this information in a user friendl
 - Controlling HTML Elements with Javascript (document.getElementByID())
 
 **Impotant Note:** Your **Latitude** and **Longitude** are numbers which represent your position on the surface of the earth.
+
 <br>
----
 ##Getting Started:
 ####_First you need to set up the files you are going to be working on._
 
@@ -29,7 +29,6 @@ You will also learn how to show and interpret this information in a user friendl
 2. Move the downloaded file to the folder you created earlier
 
 ##_Now we're ready to get coding!_
----
 
 ####_Time to Set up your document_
 
@@ -64,7 +63,6 @@ You will also learn how to show and interpret this information in a user friendl
 	```
 
 ####_Lets test that the SDK is working_
----
 
 1. Open **UVLensTutorial.html** in your browser.
 2. Open the **developer tools** javascript **console** in your browser (in chrome this is Ctrl + Shift + I), then click on the console button at the top of the opened window.
@@ -86,7 +84,6 @@ You will also learn how to show and interpret this information in a user friendl
 7. The console should come up with a number which represents the current **UV index** near your school, now lets start creating a **website** to read and display this data.
 
 ##Exercise 1:
----
 
 ######_In this exercise you will be required to create a simple webpage that will let you click buttons to display various forms of UV data on a website._
 
@@ -134,7 +131,6 @@ You will also learn how to show and interpret this information in a user friendl
 10. Congratulations, you have created a webpage that tells you the current UV for your location.
 
 ---
----
 <br>
 
 You can repeat almost the same process to get the **UV forecast** for the next four days.
@@ -143,7 +139,7 @@ You can repeat almost the same process to get the **UV forecast** for the next f
 3. This function should do pretty much the same thing as the getCurrentUV function only use `UV = uvlens.getForecastUV(latitude, longitude)` instead of `uvlens.getCurrentUV(latitude, longitude)`
 
 <br>
----
+
 ---
 <br>
 
@@ -166,7 +162,6 @@ Lastly you will use the SDK to get a **pre-generated message** from our server w
 _**Hint**: to make things look nice in your html page add `<br>` tags which stands for break, this will create a space between your html elements and text._
 
 ##Exercise 2:
----
 ######_In this exercise you will create a user friendly interface to see current and forecasted UV in a way that makes sense to anyone who looks at it._
 OK, to get your UV information to make sense the first thing we need to do is convert the numbers we got from the server to a meaningful UV level.
 Lets split the UV into five categories: 
