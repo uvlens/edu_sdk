@@ -83,8 +83,9 @@ You will also learn how to show and interpret this information in a user friendl
 	
 7. The console should come up with a number which represents the current **UV index** near your school, now lets start creating a **website** to read and display this data.
 
-##Exercise 1:
+<br><br><br>
 
+##Exercise 1:
 ######_In this exercise you will be required to create a simple webpage that will let you click buttons to display various forms of UV data on a website._
 
 01. Right at the start of your **UVLensTutorial.js** file we need to prepare the SDK. Create a funtion called **"prepare"** and add this line inside it:
@@ -134,16 +135,16 @@ You will also learn how to show and interpret this information in a user friendl
 <br>
 
 You can repeat almost the same process to get the **UV forecast** for the next four days.
+
 1. Create another **button**, set its text to something like "Get UV Four Day Forecast" and set its `onclick=getForecastUV()`.
 2. In your javascript file add another function called "getForecastUV".
 3. This function should do pretty much the same thing as the getCurrentUV function only use `UV = uvlens.getForecastUV(latitude, longitude)` instead of `uvlens.getCurrentUV(latitude, longitude)`
-
-<br>
 
 ---
 <br>
 
 Lastly you will use the SDK to get a **pre-generated message** from our server which gives an **overview** of the day's UV conditions such as the maximum UV level and the times of the day when the UV is dangerous.
+
 1. Create one more **button** and set its text to something relevant
 2. In your javascript file add a **"getDailyMessage"** function.
 3. Like for the previous functions get the latitude and longitude from your input boxes.
@@ -153,13 +154,16 @@ Lastly you will use the SDK to get a **pre-generated message** from our server w
 
 ---
 
-<br><br>
+<br>
 
 ####Well Done, you have finished a basic website that will tell you the current UV and the UV forecast, remember to put on sunscreen if the UV is higher than 3!
 ####However, at the moment the UV is just a number, which doesn't tell us much. And the forecast is a big mess of array information. Move on to exercise 2 to learn how to make your web page user friendly.
 
+<br>
 
 _**Hint**: to make things look nice in your html page add `<br>` tags which stands for break, this will create a space between your html elements and text._
+
+<br>
 
 ##Exercise 2:
 ######_In this exercise you will create a user friendly interface to see current and forecasted UV in a way that makes sense to anyone who looks at it._
