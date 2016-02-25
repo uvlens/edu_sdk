@@ -8,7 +8,7 @@ You will also learn how to show and interpret this information in a user friendl
 - Javascript Arrays
 - Controlling HTML Elements with Javascript (document.getElementByID())
 
-**Impotant Note:** Your **Latitude** and **Longitude** are numbers which represent your position on the surface of the earth.
+**Note:** Your **Latitude** and **Longitude** are numbers which represent your position on the surface of the earth.
 
 <br>
 #Getting Started:

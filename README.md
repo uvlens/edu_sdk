@@ -37,6 +37,8 @@ The project is designed to be completed in your own time over the course of a se
 | getCurrentUV(latitude, longitude)  | Returns the current UV Index as measured by the nearest sensor to a given latitude/longitude  |
 | getDailyMessage(latitude, longitude) | Returns a string message which gives an overview of todays UV conditions at the given location |
 | getForecastUV(latitude, longitude) | Returns an array of hourly UV Indices forecasting the UV level for the next 96 hours (4 days) starting today at 12:00 am (midday) local time |
+| getWeather(latitude, longitude) | Returns a string representing the current weather conditions (see http://www.wunderground.com/weather/api/d/docs?d=resources/phrase-glossary&MR=1, "Current Conditions" for all possible weather conditions |
+| getTemperature(latitude, longitude) | Returns a numeric string representing the current temperature in degrees celsius |
 
 These functions all run Synchronously, the SDK also includes Asynchronous versions of all of these functions for advanced users.
 These functions can be accessed using uvlens.asnyc instead of uvlens and have an extra callback argument.
@@ -48,6 +50,8 @@ These functions can be accessed using uvlens.asnyc instead of uvlens and have an
 | async.getCurrentUV(latitude, longitude, callback)  | use callback = function(currentUV) |
 | async.getDailyMessage(latitude, longitude, callback) | use callback = function(dailyMessage) |
 | async.getForecastUV(latitude, longitude, callback) | use callback = function(forecastUVArray) |
+| async.getWeather(latitude, longitude, callback) | use callback = function(currentWeather) |
+| async.getTemperature(latitude, longitude, callback) | use callback = function(currentTemperature) |
 
 ###SDK Keys
 To use this SDK a key is required, a key must be given as input to the prepare function to unlock the SDK and

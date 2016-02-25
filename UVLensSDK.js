@@ -199,6 +199,28 @@ window.uvlens = (function () {
 
         },
         
+        getWeather: function (latitude, longitude){
+            if(hasKey() && checkLocation(latitude, longitude)){
+                
+                var response = apiGet('/Combined', '?longitude=' + longitude + '&latitude=' + latitude + '&skintype=0' + '&key=' + key);
+                return JSON.parse(response).CurrentWeather;
+                
+            }else{
+                return null;
+            }
+        },
+        
+        getTemperature: function (latitude, longitude){
+            if(hasKey() && checkLocation(latitude, longitude)){
+                
+                var response = apiGet('/Combined', '?longitude=' + longitude + '&latitude=' + latitude + '&skintype=0' + '&key=' + key);
+                return JSON.parse(response).CurrentTemperature;
+                
+            }else{
+                return null;
+            }
+        },
+        
         //Asynchronous version of functions for more advanced users
         async : {         
             //function which can be used to test whether things are working in the sdk
@@ -289,7 +311,25 @@ window.uvlens = (function () {
                         callback(UVTimes);
                     });         
                 } 
-            }
+            },
+            
+            getWeather: function (latitude, longitude, callback){
+                if(hasKey() && checkLocation(latitude, longitude)){
+                    
+                    var response = apiGetAsync('/Combined', '?longitude=' + longitude + '&latitude=' + latitude + '&skintype=0' + '&key=' + key, function(response){
+                        callback(JSON.parse(response).CurrentWeather);                        
+                    });
+                }
+            },
+            
+            getTemperature: function (latitude, longitude, callback){
+                if(hasKey() && checkLocation(latitude, longitude)){
+                    
+                    var response = apiGetAsync('/Combined', '?longitude=' + longitude + '&latitude=' + latitude + '&skintype=0' + '&key=' + key, function(response){
+                        callback(JSON.parse(response).CurrentTemperature);                        
+                    });
+                }
+            },
         }
         /*getBurnTime: function (latitude, longitude, skintype){
             if(!hasKey() || !checkLocation(latitude, longitude)){return null};
