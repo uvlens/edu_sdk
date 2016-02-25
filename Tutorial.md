@@ -11,7 +11,7 @@ You will also learn how to show and interpret this information in a user friendl
 **Impotant Note:** Your **Latitude** and **Longitude** are numbers which represent your position on the surface of the earth.
 
 <br>
-##Getting Started:
+#Getting Started:
 ####_First you need to set up the files you are going to be working on._
 
 1. Create a new folder to put your work in.
@@ -84,7 +84,7 @@ You will also learn how to show and interpret this information in a user friendl
 
 <br><br><br>
 
-##Exercise 1:
+#Exercise 1:
 ######_In this exercise you will be required to create a simple webpage that will let you click buttons to display various forms of UV data on a website._
 
 01. Right at the start of your **UVLensTutorial.js** file we need to prepare the SDK. Create a funtion called **"prepare"** and add this line inside it:
@@ -145,7 +145,7 @@ You will also learn how to show and interpret this information in a user friendl
 ---
 <br>
 
-You can repeat almost the same process to get the **UV forecast** for the next four days.
+#####You can repeat almost the same process to get the **UV forecast** for the next four days.
 
 1. Create another **button**, set its text to something like "Get UV Four Day Forecast" and set its `onclick=getForecastUV()`.
 2. In your javascript file add another function called "getForecastUV".
@@ -156,7 +156,7 @@ You can repeat almost the same process to get the **UV forecast** for the next f
 ---
 <br>
 
-Lastly you will use the SDK to get a **pre-generated message** from our server which gives an **overview** of the day's UV conditions such as the maximum UV level and the times of the day when the UV is dangerous.
+#####Lastly you will use the SDK to get a **pre-generated message** from our server which gives an **overview** of the day's UV conditions such as the maximum UV level and the times of the day when the UV is dangerous.
 
 1. Create one more **button** and set its text to something relevant
 2. In your javascript file add a **"getDailyMessage"** function.
@@ -179,7 +179,7 @@ _**Hint**: to make things look nice in your html page add `<br>` tags which stan
 
 <br>
 
-##Exercise 2:
+#Exercise 2:
 ######_In this exercise you will create a user friendly interface to see current and forecasted UV in a way that makes sense to anyone who looks at it._
 OK, to get your UV information to make sense the first thing we need to do is convert the numbers we got from the server to a meaningful UV level.
 Lets split the UV into five categories: 
@@ -211,9 +211,10 @@ Lets split the UV into five categories:
 Next lets add this functionality to the the **getCurrentUV** function, this simply means changing the line where you set the output to the UV `document.getElementById("output").innerHTML = UV`.
 You just need to write `getMeaningfulUV(UV)` after the equals sign instead of simply `UV`, this way your output will be set to whatever the **getMeaningfulUV** function returns when it is given "UV" (the UV index) as an input.
 
+
 ####_Try it out! your current UV function should write a meaningful output as its response._
 ---
-<br><br><br>
+<br><br>
 OK now the tricky bit, lets format the **UV forecasts** into a **table** so that you can see what is going on there.
 
 1. Add a `<select>` element with `id="day"` so that you can choose which day you want to see the forecast for.
@@ -243,8 +244,12 @@ OK now the tricky bit, lets format the **UV forecasts** into a **table** so that
 	</tbody> 
 	```
 	so that the table has headings and an empty body.
+	
+<br>
+---
+<br>
 
-Now you need to create the javascript that will add the **forecasts** to the table. Lets edit the **getForecastUV** function.
+#####Now you need to create the javascript that will add the **forecasts** to the table. Lets edit the **getForecastUV** function.
 
 1. Firstly **remove** the line where the output element's innerHTML is set to the UV forecast.
 2. Create a new variable `var table` and set it equal to the **"uvForecast"** element we created earlier (the table) using `document.getElementById`.
@@ -276,12 +281,13 @@ Now you need to create the javascript that will add the **forecasts** to the tab
 	
 	So, here the starting point is shifted along 24 hours for each day that you are looking into the future (ie. For today start = 0 (00:00 today), for tomorrow start = 24 (24:00 today = 00:00 tomorrow), etc).
 	The end is simply set to 24 hours after the start so that the program is always looking at one entire day at a time.
+	
 <br>
 	
 ---
 <br>
 
-Now you have all the variables you need to create and fill the **table**. To actually create the table lets use a **for** loop.
+#####Now you have all the variables you need to create and fill the **table**. To actually create the table lets use a **for** loop.
 
 1. Create a **for** loop which loops from `var i = start` while `i < end`, incrementing `i` by **1** each time `for(var i = 0; i < end; i++)`.
 	(so the program ends up going from i = start (00:00 on the chosen day) to i = end (24:00 on the chosen day) with the loop running once for each hour).
