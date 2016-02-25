@@ -32,11 +32,22 @@ The project is designed to be completed in your own time over the course of a se
 #Technical Documentation
 | Function  | Description |
 | ------------- | ------------- |
-| prepare(SDKKey) | This function must be run before the rest of the SDK can be used, it supplies the SDK with your key which give you permission to access our servers |
+| prepare(SDKKey) | This function must be run before the rest of the SDK can be used, it supplies the SDK with your key which give you permission to access our servers and runs the test function |
 | test()  | Performs a few tests to check whether the SDK is working properly (eg can connect to server) and writes results to the console  |
 | getCurrentUV(latitude, longitude)  | Returns the current UV Index as measured by the nearest sensor to a given latitude/longitude  |
 | getDailyMessage(latitude, longitude) | Returns a string message which gives an overview of todays UV conditions at the given location |
 | getForecastUV(latitude, longitude) | Returns an array of hourly UV Indices forecasting the UV level for the next 96 hours (4 days) starting today at 12:00 am (midday) local time |
+
+These functions all run Synchronously, the SDK also includes Asynchronous versions of all of these functions for advanced users.
+These functions can be accessed using uvlens.asnyc instead of uvlens and have an extra callback argument.
+
+| Async Function  | Callback Useage |
+| ------------- | ------------- |
+| async.prepare(SDKKey, callback) | use callback = function(success) where success is true if tests were successful and false if tests failed |
+| async.test(callback)  | use callback = function(success) where success is true if tests were successful and false if tests failed |
+| async.getCurrentUV(latitude, longitude, callback)  | use callback = function(currentUV) |
+| async.getDailyMessage(latitude, longitude, callback) | use callback = function(dailyMessage) |
+| async.getForecastUV(latitude, longitude, callback) | use callback = function(forecastUVArray) |
 
 ###SDK Keys
 To use this SDK a key is required, a key must be given as input to the prepare function to unlock the SDK and

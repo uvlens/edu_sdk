@@ -68,8 +68,9 @@ You will also learn how to show and interpret this information in a user friendl
 2. Open the **developer tools** javascript **console** in your browser (in chrome this is Ctrl + Shift + I), then click on the console button at the top of the opened window.
 3. In the console enter **uvlens.prepare(KEY)** entering your UVLens SDK key into the brackets and press enter. This will set up the SDK to use your key (only until you refresh the page though)
 	and will also run some tests to make sure everything is working correctly. Any errors when starting the SDK will be displayed in the console.
-	![Screenshot of developer console](http://s2.postimg.org/odnnv4l3d/Developer_Console.png)
+	![Screenshot of developer console](http://s27.postimg.org/54y2pat83/console.png)
 
+35. Note that you will get a yellow warning related to XMLHttpRequest when running this. This is normal. See the end of the tutorial for a detailed explanation of why this occurs.
 4. If the SDK starts successfully you can get try getting the current UV near you.
 5. Go to this website: [Find my Latitude and Longitude](http://www.mapcoordinates.net/en) and use the **"show location"** bar to find your school. (text link: http://www.mapcoordinates.net/en)
 6. Go back to your **UVLensTutorial.html** page and in the developer console enter: 
@@ -246,6 +247,7 @@ OK now the tricky bit, lets format the **UV forecasts** into a **table** so that
 	so that the table has headings and an empty body.
 	
 <br>
+
 ---
 <br>
 
@@ -325,7 +327,11 @@ OK now the tricky bit, lets format the **UV forecasts** into a **table** so that
 	
 4. Try out your **website**, when you click the get UV forecast button it should show a table with **forecasts** for whatever day you choose.
 
+<br>
+
 _**Hint:** At the moment you need you need to push the get forecast button every time you choose a different date in the select box. Try adding an onchange= to the select element_
+
+<br>
 
 The daily message doesn't need any change to be interpretted. Our server has already put the raw data into a friendly message for you! If you want you could try adding your name to the message or doing something similar
 to make it a bit more personalised.
@@ -333,7 +339,7 @@ to make it a bit more personalised.
 <br>
 
 ####You are finished! you have a simple website for looking at live and forecasted UV data. Try making it look better by adding some CSS!
-![Screenshot of what it should look like]()
+![Screenshot of what it should look like](http://postimg.org/image/hkxtiuwtn/)
 
 _**Hint:** Sometimes your table will display the wrong dates, this is because most modern browsers cache web pages which can cause them to show the date you first viewed the page instead of the current date.
 Try clearing your browsing data, turning on private browsing, or just add these lines directly below your `<head>` tag._
@@ -343,3 +349,27 @@ Try clearing your browsing data, turning on private browsing, or just add these 
 <meta http-equiv=”Expires” content=”-1″>
 <meta http-equiv=”CACHE-CONTROL” content=”NO-CACHE”>
 ```
+
+<br><br><br><br><br><br>
+
+---
+####Why you are getting a yellow warning every time you run the SDK:
+The SDK uses a feature built into modern browsers called XMLHttpRequest to request data from our server.
+This is used to send a request to a web page and then recieve a response, in this situation we use it to send a request to our server,
+for example asking to get the current UV, and then get the number as a response.
+
+In order to simplify the way this call is made for you XMLHttpRequest is run "Synchronously" which basically means it is run just like any other function in your code,
+importantly, your program waits for it to complete before moving on to something else, so if you had another line of code directly after the XMLHttpRequest code this would only run once
+XMLHttpRequest was complete.
+
+However there is a problem with this. Because the XMLHttpRequest is made over the internet it is possible that it could take quite a long time for the server to respond,
+you may have noticed that sometimes after clicking a button on your web page you have to wait a few seconds before anything happens. Since your program waits for XMLHttpRequest to complete
+this means that your page will freeze during this time and will not be able to respond to anything any more.
+
+This is why the warning comes up, XMLHttpRequest is recommended to be run "Asynchronously" meaning that your program will move on and do other things while XMLHttpRequest is running.
+However this can be more difficult to work with, especially because then code like `var UV = uvlens.getCurrentUV(); console.log(UV);` wouldn't work propperly because because when console.log runs
+getCurrentUV hasn't finished yet so UV is not yet set to anything.
+
+For this tutorial we recommend using synchronous programming because although it has some problems it is simpler to use. However included with the SDK there is another version of each function
+accessed by using, for example `uvlens.async.getCurrentUV(); or uvlens.asnyc.getForecastUV()`, these functions are asynchronous and you might want to use them if you want to work on a
+more advanced version of your website in the long term. (See https://github.com/uvlens/edu_sdk for the Technical Documentation for this SDK which shows these functions).

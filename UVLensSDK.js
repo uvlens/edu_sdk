@@ -20,8 +20,6 @@ window.uvlens = (function () {
                 
                 xmlhttp.open("GET", api+target+parameterString, false);
                 xmlhttp.setRequestHeader("Accept", "application/json; charset=utf-8");
-                xmlhttp.setRequestHeader("Accept-Datetime", "Fri, 15 Feb 2013 00:00:00 GMT");
-                xmlhttp.setRequestHeader("Authorization", "edusdk");
                 xmlhttp.send();
                 
             }catch(error){          
@@ -31,17 +29,56 @@ window.uvlens = (function () {
             
             if(xmlhttp.status == 403){
                 console.error('ERROR: You have not entered a valid key into uvlens.prepare(YOUR SDK KEY) please get a key from your school or learn how to request one at "github.com/uvlens/edu_sdk"')
-            }else if(xmlhtt.status == 404){
+            }else if(xmlhttp.status == 404){
                 console.error('ERROR: UVLens api server not found, check your internet connection')
             }
             
             return xmlhttp.responseText;
     }
     
+    //asynchronous version of apiget for uvlens.async functions
+    function apiGetAsync(target, parameterString, callback){
+            var xmlhttp;
+            
+            if(!parameterString){ '?key=' + key };
+            
+            try{     
+                          
+                xmlhttp = new XMLHttpRequest();
+                
+                //this is where the async comes in, this function is run when the http request finishes
+                xmlhttp.onreadystatechange = function()
+                {
+                    if (xmlhttp.readyState == 4 && xmlhttp.status == 200)
+                    {
+                        //on http request success, call the callback
+                        callback(xmlhttp.responseText); // Another callback here
+                    
+                    //handle some common error codes
+                    }else if(xmlhttp.status == 403){
+                        console.error('ERROR: You have not entered a valid key into uvlens.prepare(YOUR SDK KEY) please get a key from your school or learn how to request one at "github.com/uvlens/edu_sdk"')
+                    }else if(xmlhttp.status == 404){
+                        console.error('ERROR: UVLens api server not found, check your internet connection')
+                    }
+                }
+                
+                xmlhttp.open("GET", api+target+parameterString, true);
+                xmlhttp.setRequestHeader("Accept", "application/json; charset=utf-8");
+                xmlhttp.send();
+                
+            }catch(error){          
+                console.error('ERROR: server request failed, try running uvlens.test():\n' + error);  
+            }
+    }
+    
     //internal function for checking if user is within an area that works
     function checkLocation(latitude, longitude){
         if(longitude < 0){
-            latitude+=360;
+            longitude+=360;
+        }
+        
+        if(maxLongitude < 0){
+            maxLongitude+=360;
         }
         
         if(latitude > maxLatitude || latitude < minLatitude || longitude > maxLongitude || longitude < minLongitude){
@@ -108,48 +145,152 @@ window.uvlens = (function () {
        //function which sets the key and then test the sdk
         prepare: function (SDKKey) {
             key = SDKKey;
-            if(test()){
+            if(this.test()){
                 console.log("UVLens SDK Successfuly started with all tests passed, The SDK is ready to use.")
             }
         },
         
         getDailyMessage: function (latitude, longitude) {
-            if(!hasKey() || !checkLocation(latitude, longitude)){return null};
-            
-            var response = apiGet('/Combined', '?longitude=' + longitude + '&latitude=' + latitude + '&skintype=0' + '&key=' + key);
-            return JSON.parse(response).DailyMessage;
+            if(hasKey() && checkLocation(latitude, longitude)){
+                
+                var response = apiGet('/Combined', '?longitude=' + longitude + '&latitude=' + latitude + '&skintype=0' + '&key=' + key);
+                return JSON.parse(response).DailyMessage;
+                
+            }else{
+                return null;
+            }
         },
          
         getCurrentUV: function (latitude, longitude) {
-            if(!hasKey() || !checkLocation(latitude, longitude)){return null};
+            if(hasKey() && checkLocation(latitude, longitude)){
+                
+                var response = apiGet('/Forecast/ForecastUTC', '?longitude=' + longitude + '&latitude=' + latitude + '&key=' + key);
+                return JSON.parse(response).UVNow;
             
-            var response = apiGet('/Forecast/ForecastUTC', '?longitude=' + longitude + '&latitude=' + latitude + '&key=' + key);
-            return JSON.parse(response).UVNow;
+            }else{
+                return null;
+            }
         },
         
         getForecastUV: function (latitude, longitude){
-            if(!hasKey() || !checkLocation(latitude, longitude)){return null};
-            
-            var response = apiGet('/Forecast/ForecastUTC', '?longitude=' + longitude + '&latitude=' + latitude + '&key=' + key);
-            
-            var time = JSON.parse(response).LocalForecast.uvi;
-            var timeShift = (-1)*(new Date().getTimezoneOffset()/60) - 12;
-            
-            //shift array so that it starts at 0am local time
-            if(timeShift > 0){
-                for(var i = 0; i < timeShift; i++){
-                    time.unshift(0);
+            if(hasKey() && checkLocation(latitude, longitude)){
+                var response = apiGet('/Forecast/ForecastUTC', '?longitude=' + longitude + '&latitude=' + latitude + '&key=' + key);
+                
+                var time = JSON.parse(response).LocalForecast.uvi;
+                var timeShift = (-1)*(new Date().getTimezoneOffset()/60) - 12;
+                
+                //shift array so that it starts at 0am local time
+                if(timeShift > 0){
+                    for(var i = 0; i < timeShift; i++){
+                        time.unshift(0);
+                    }
+                }else{
+                    for(var i = 0; i > timeShift; i--){
+                        time.shift();
+                    }
                 }
+                            
+                
+                return time;
+                
             }else{
-                for(var i = 0; i > timeShift; i--){
-                    time.shift();
-                }
+                return null;
             }
-            
-            
-            return time;
+
         },
         
+        //Asynchronous version of functions for more advanced users
+        async : {         
+            //function which can be used to test whether things are working in the sdk
+            test: function (callback) {
+                var errorCount = 0;
+                if(!window.XMLHttpRequest){
+                    errorCount++;
+                    console.error('ERROR: Your browser does not support XMLHttpRequest which is used by this sdk, please upgrade to any browser newer than IE7 to use this sdk');
+                }
+                
+                if(!JSON){
+                    errorCount++;
+                    console.error('ERROR: Your browser does not support JSON encoding/decoding (requires IE8+, chrome 3+, firefox 3.1+, safari 4+ or any other modern browser)');
+                }
+                
+                errorCount += hasKey() ? 0 : 1;
+                
+                if(errorCount == 0){
+                    apiGetAsync('/Forecast/ForecastUTC', '?longitude=1&latitude=1&key=' + key, function(check){
+                        if(!check){                   
+                            
+                                errorCount++;
+                                console.error('ERROR: Cannot connect to the uvlens server, check your internet connection');
+                            
+                        }else if(!JSON || !JSON.parse(check).StartTime){
+                            errorCount++;
+                            console.error('ERROR: Invalid response from server: \n' + check);
+                        }
+                    });
+                }
+                
+                if(errorCount > 0){
+                    alert('ERROR: Issues were found while testing the sdk, ' + errorCount + ' errors occured, check console for details');
+                    if(callback){callback(false);}
+                }else{
+                    if(callback){callback(true);}
+                }
+            }, 
+            
+            //function which sets the key and then test the sdk
+            prepare: function (SDKKey, callback) {
+                key = SDKKey;
+                
+                this.test(function(result){
+                    
+                    //on completion of test log success if necessary, then callback
+                    console.log("UVLens SDK Successfuly started with all tests passed, The SDK is ready to use.")
+                    if(callback){callback(result);}
+                    
+                })          
+            },
+            
+            getDailyMessage: function (latitude, longitude, callback) {
+                if(hasKey() && checkLocation(latitude, longitude)){
+                    apiGetAsync('/Combined', '?longitude=' + longitude + '&latitude=' + latitude + '&skintype=0' + '&key=' + key, function(response){
+                        callback(JSON.parse(response).DailyMessage);
+                    });
+                }
+            },
+            
+            getCurrentUV: function (latitude, longitude, callback) {
+                if(hasKey() && checkLocation(latitude, longitude)){              
+                    apiGetAsync('/Forecast/ForecastUTC', '?longitude=' + longitude + '&latitude=' + latitude + '&key=' + key, function(response){
+                        callback(JSON.parse(response).UVNow);
+                    });
+                }
+            },
+            
+            getForecastUV: function (latitude, longitude, callback){
+                if(hasKey() && checkLocation(latitude, longitude)){
+                    //as callback use an anon function where we fix the time then run the callback with the response
+                    apiGetAsync('/Forecast/ForecastUTC', '?longitude=' + longitude + '&latitude=' + latitude + '&key=' + key, function(response){
+                                            
+                        var UVTimes = JSON.parse(response).LocalForecast.uvi;
+                        var timeShift = (-1)*(new Date().getTimezoneOffset()/60) - 12;
+                        
+                        //shift array so that it starts at 0am local time
+                        if(timeShift > 0){
+                            for(var i = 0; i < timeShift; i++){
+                                UVTimes.unshift(0);
+                            }
+                        }else{
+                            for(var i = 0; i > timeShift; i--){
+                                UVTimes.shift();
+                            }
+                        }
+                        
+                        callback(UVTimes);
+                    });         
+                } 
+            }
+        }
         /*getBurnTime: function (latitude, longitude, skintype){
             if(!hasKey() || !checkLocation(latitude, longitude)){return null};
             
